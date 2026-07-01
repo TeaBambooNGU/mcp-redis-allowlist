@@ -98,6 +98,24 @@ const BLOCKED_SUBCOMMANDS = new Set([
   "slowlog:reset",
 ]);
 
+const SUBCOMMAND_FAMILIES = new Set([
+  "acl",
+  "client",
+  "cluster",
+  "command",
+  "config",
+  "function",
+  "latency",
+  "memory",
+  "module",
+  "object",
+  "pubsub",
+  "script",
+  "sentinel",
+  "slowlog",
+  "xinfo",
+]);
+
 const COMMAND_TOKEN = /^[a-z][a-z0-9_.-]*$/;
 
 function normalizeToken(value: string | undefined): string {
@@ -197,5 +215,5 @@ export function isReadOnlyCommand(
 export function describeCommand(command: string, subcommand?: string): string {
   const cmd = normalizeToken(command);
   const sub = normalizeToken(subcommand);
-  return sub ? `${cmd} ${sub}` : cmd;
+  return sub && SUBCOMMAND_FAMILIES.has(cmd) ? `${cmd} ${sub}` : cmd;
 }

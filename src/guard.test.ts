@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { isReadOnlyCommand, parseCommandSpecs } from "./guard.js";
+import { describeCommand, isReadOnlyCommand, parseCommandSpecs } from "./guard.js";
 
 test("allows built-in read commands", () => {
   for (const command of ["get", "mget", "hgetall", "lrange", "smembers", "zrange", "scan", "info", "ttl", "xrange", "pfcount"]) {
@@ -65,4 +65,11 @@ test("parses command specs", () => {
     { command: "slowlog", subcommand: "get" },
     { command: "latency", subcommand: "latest" },
   ]);
+});
+
+test("describes rejected commands without exposing key arguments", () => {
+  assert.equal(describeCommand("SET", "user:123:token"), "set");
+  assert.equal(describeCommand("CLIENT", "KILL"), "client kill");
+  assert.equal(describeCommand("SLOWLOG", "RESET"), "slowlog reset");
+  assert.equal(describeCommand("LATENCY", "RESET"), "latency reset");
 });
