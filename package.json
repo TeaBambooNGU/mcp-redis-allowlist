@@ -1,0 +1,32 @@
+{
+  "name": "@teabamboongu/mcp-redis-allowlist",
+  "version": "0.1.0",
+  "description": "Read-only Redis MCP server with configurable command allowlist.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcp-redis-allowlist": "dist/server.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test": "npm run build && node --test dist/**/*.test.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "dotenv": "^17.2.3",
+    "ioredis": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
